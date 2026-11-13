@@ -1,0 +1,52 @@
+# pubspec.yaml = "ficha" do projeto: nome, versão e bibliotecas que ele usa.
+
+# Nome do pacote (usado nos imports: package:controle_gastos/...).
+name: controle_gastos
+# Descrição curta do app.
+description: App simples para controlar gastos e entradas de dinheiro.
+# Impede publicar sem querer no pub.dev (repositório público de pacotes).
+publish_to: 'none'
+# Versão do app: 1.0.0 é a versão "visível", +1 é o número do build.
+version: 1.0.0+1
+
+# Versões do Dart aceitas pelo projeto (qualquer 3.x).
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+# Bibliotecas que o app precisa para funcionar.
+dependencies:
+  # O próprio Flutter (widgets, telas, botões...).
+  flutter:
+    sdk: flutter
+  # Componentes visuais do Material Design (botões, cartões, listas...).
+  # Desde o Flutter 3.47 eles ficam neste pacote separado.
+  material_ui: ^1.11.0
+  # Salva dados simples na memória do celular (chave -> valor).
+  shared_preferences: ^2.3.0
+
+# Bibliotecas usadas só durante o desenvolvimento.
+dev_dependencies:
+  # Regras de boas práticas que o "flutter analyze" confere no código.
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+# Configurações específicas do Flutter.
+flutter:
+  # Libera os ícones do Material Design (Icons.add, Icons.delete...).
+  uses-material-design: true
+  # Fonte Manrope (licença livre OFL, ver assets/fonts/OFL.txt).
+  # Cada arquivo é um "peso" (grossura) da letra.
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Manrope-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Manrope-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Manrope-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Manrope-ExtraBold.ttf
+          weight: 800
