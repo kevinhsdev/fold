@@ -30,6 +30,17 @@ class MeuApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // esconde a faixa "DEBUG" no canto
       theme: criarTema(), // aparência definida em tema.dart
       home: const TelaInicial(), // primeira tela que aparece
+      // builder "embrulha" todas as telas. Num computador (tela larga), o app
+      // fica com no máximo 480 de largura, centralizado, como um celular.
+      builder: (context, tela) => ColoredBox(
+        color: Cores.fundo, // pinta as laterais com a cor de fundo do app
+        child: Center( // centraliza na tela
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 480), // largura máxima
+            child: tela, // a tela atual (inicial ou formulário)
+          ),
+        ),
+      ),
     );
   }
 }
