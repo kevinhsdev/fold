@@ -1,0 +1,40 @@
+# Publica o app no GitHub Pages automaticamente a cada "git push" na branch main.
+# Passo a passo que o GitHub executa: baixa o código -> instala o Flutter ->
+# roda os testes -> compila a versão web -> publica no site.
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main] # roda quando alguém envia código para a main
+  workflow_dispatch: # permite rodar na mão pela aba "Actions"
+
+permissions:
+  contents: read # ler o código
+  pages: write # publicar no Pages
+  id-token: write # provar ao Pages que é este repositório publicando
+
+concurrency:
+  group: pages # se dois pushes chegarem juntos, só o último publica
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4 # baixa o código do repositório
+      - uses: subosito/flutter-action@v2 # instala o Flutter
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get # baixa as bibliotecas
+      - run: flutter test # se algum teste falhar, para aqui e NÃO publica
+      - run: flutter build web --release --base-href /fold/ # o site fica em .../fold/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web # pasta gerada pelo build
+      - id: deploy
+        uses: actions/deploy-pages@v4 # publica
