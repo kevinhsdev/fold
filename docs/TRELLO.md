@@ -1,6 +1,6 @@
 # Quadro Trello (Pessoa 3)
 
-Crie um quadro no Trello chamado **"Meus Gastos – Flutter"** com as listas abaixo e copie os cartões. Coloque a **etiqueta** e o **responsável** em cada cartão. Durante o trabalho, mova os cartões da esquerda para a direita. Tire prints do quadro em fases diferentes para mostrar na apresentação.
+Crie um quadro no Trello chamado **"Fold – Flutter"** com as listas abaixo e copie os cartões. Coloque a **etiqueta** e o **responsável** em cada cartão. Durante o trabalho, mova os cartões da esquerda para a direita. Tire prints do quadro em fases diferentes para mostrar na apresentação.
 
 **Listas:** `Backlog` → `A Fazer` → `Fazendo` → `Revisão` → `Feito`
 

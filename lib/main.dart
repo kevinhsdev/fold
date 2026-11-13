@@ -26,7 +26,7 @@ class MeuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // MaterialApp é a "casca" do app: tema, título e primeira tela.
     return MaterialApp(
-      title: 'Meus Gastos', // nome que aparece na lista de apps abertos
+      title: 'Fold', // nome do app (aparece na aba do navegador e na lista de apps abertos)
       debugShowCheckedModeBanner: false, // esconde a faixa "DEBUG" no canto
       theme: criarTema(), // aparência definida em tema.dart
       home: const TelaInicial(), // primeira tela que aparece

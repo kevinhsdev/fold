@@ -1,4 +1,4 @@
-# 💰 Meus Gastos
+# Fold
 
 App em **Flutter** para controlar o próprio dinheiro: você lança o que **gastou** e o que **recebeu**, e o app mostra o **saldo**. Os dados ficam salvos no celular, então nada se perde ao fechar o app.
 

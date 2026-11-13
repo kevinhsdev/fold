@@ -1,11 +1,11 @@
 {
-    "name": "controle_gastos",
-    "short_name": "controle_gastos",
+    "name": "Fold",
+    "short_name": "Fold",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#F6F4EF",
+    "theme_color": "#F6F4EF",
+    "description": "Controle seus gastos e entradas de um jeito simples.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
