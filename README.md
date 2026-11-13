@@ -1,5 +1,10 @@
 # Fold
 
+<img src="web/icons/Icon-192.png" width="96" alt="Ícone do Fold: uma carteira">
+
+**👉 Abrir o app: https://kevinhsdev.github.io/fold/**
+(no celular, abra no navegador e use "Adicionar à tela inicial" para ele virar um ícone)
+
 App em **Flutter** para controlar o próprio dinheiro: você lança o que **gastou** e o que **recebeu**, e o app mostra o **saldo**. Os dados ficam salvos no celular, então nada se perde ao fechar o app.
 
 ## Equipe
