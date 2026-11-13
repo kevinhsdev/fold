@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fold – Flutter (quadro)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #172b4d;
+         background: linear-gradient(135deg, #0c66e4, #6e5dc6); min-height: 100vh; }
+  header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(0,0,0,.24); color: #fff; }
+  header h1 { font-size: 18px; margin: 0; }
+  header .membros { margin-left: auto; display: flex; gap: 4px; }
+  .av { width: 28px; height: 28px; border-radius: 50%; display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; }
+  .P1 { background: #9f6fd6; } .P2 { background: #1f845a; } .P3 { background: #c25100; }
+  main { display: flex; gap: 12px; padding: 12px 16px 24px; overflow-x: auto; align-items: flex-start; }
+  .lista { flex: 0 0 272px; background: #f1f2f4; border-radius: 12px; padding: 8px; max-height: calc(100vh - 90px); display: flex; flex-direction: column; }
+  .lista h2 { font-size: 14px; margin: 4px 8px 8px; display: flex; justify-content: space-between; }
+  .lista h2 span { color: #626f86; font-weight: 400; }
+  .cartoes { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 0 2px 2px; }
+  .cartao { background: #fff; border-radius: 8px; padding: 8px 10px; box-shadow: 0 1px 1px rgba(9,30,66,.25); cursor: pointer; text-align: left; border: 0; font: inherit; color: inherit; }
+  .cartao:hover { outline: 2px solid #388bff; }
+  .etiquetas { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+  .etq { height: 8px; width: 40px; border-radius: 4px; }
+  .rodape { display: flex; align-items: center; gap: 10px; margin-top: 6px; color: #626f86; font-size: 12px; }
+  .rodape .quem { margin-left: auto; display: flex; gap: 2px; }
+  .rodape .av { width: 22px; height: 22px; font-size: 9px; }
+  .ok { background: #1f845a; color: #fff; border-radius: 3px; padding: 0 4px; }
+  dialog { border: 0; border-radius: 12px; padding: 24px; width: min(560px, calc(100vw - 32px)); color: #172b4d; }
+  dialog::backdrop { background: rgba(0,0,0,.5); }
+  dialog h3 { margin: 0 0 4px; font-size: 20px; }
+  dialog .sub { color: #626f86; margin-bottom: 16px; }
+  dialog h4 { margin: 16px 0 6px; font-size: 14px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; color: #fff; font-size: 12px; font-weight: 600; margin-right: 4px; }
+  dialog ul { list-style: none; padding: 0; margin: 0; }
+  dialog li { padding: 3px 0; }
+  .comentario { background: #f1f2f4; border-radius: 8px; padding: 8px 10px; }
+  .fechar { position: absolute; top: 12px; right: 12px; border: 0; background: #f1f2f4; border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Fold – Flutter</h1>
+  <div class="membros"><span class="av P1" title="Pessoa 1 (design)">P1</span><span class="av P2" title="Pessoa 2 (código)">P2</span><span class="av P3" title="Pessoa 3 (documentação)">P3</span></div>
+</header>
+<main id="quadro"></main>
+<dialog id="detalhe"></dialog>
+<script>
+const LISTAS = [{"nome": "Backlog (ideias pra depois)", "cartoes": [{"t": "Filtrar lançamentos por mês", "et": ["M"], "resp": ["P2"], "prazo": "", "desc": "Hoje o app soma tudo desde o primeiro lançamento. Seria legal ter um seletor de mês em cima do saldo.", "check": [], "com": ""}, {"t": "Editar um lançamento", "et": ["M"], "resp": ["P2"], "prazo": "", "desc": "Por enquanto só da pra apagar e criar de novo. A ideia é tocar no item e abrir o formulário já preenchido.", "check": [], "com": ""}, {"t": "Gráfico de gastos por categoria", "et": ["M", "D"], "resp": ["P1", "P2"], "prazo": "", "desc": "Um grafico de pizza ou barras mostrando onde o dinheiro mais vai (ex: alimentação 40%).", "check": [], "com": ""}, {"t": "Escolher a data do lançamento", "et": ["M"], "resp": ["P2"], "prazo": "", "desc": "Hoje a data é sempre a do dia que salvou. Colocar um campo de data no formulario.", "check": [], "com": ""}]}, {"nome": "A Fazer", "cartoes": [{"t": "Gravar vídeo curto do app funcionando", "et": ["Doc"], "resp": ["P3"], "prazo": "18/11", "desc": "Gravar uns 40 segundos usando o app no celular, caso a internet ou o projetor falhe na hora da apresentação.", "check": ["Gravar a tela do celular", "Cortar o video", "Colocar no slide"], "com": ""}]}, {"nome": "Fazendo", "cartoes": [{"t": "Montar os slides da apresentação", "et": ["Doc"], "resp": ["P3", "P1"], "prazo": "18/11", "desc": "Slides simples: problema, telas do figma, demo, um pedaço do código e o trello. Usar as cores do app nos slides tbm.", "check": ["Slide do problema", "Prints do Figma", "Prints do app", "Print do Trello", "Slide final (melhorias futuras)"], "com": "P1: ja coloquei as telas do figma nos slides 3 e 4"}]}, {"nome": "Revisão", "cartoes": [{"t": "Revisar o README", "et": ["Doc"], "resp": ["P3", "P2"], "prazo": "17/11", "desc": "Conferir se o passo a passo de rodar o app funciona num pc que nunca teve flutter.", "check": ["Testar o passo a passo do zero", "Conferir os links", "Corrigir erros de portugues"], "com": "P2: testei no pc da faculdade e funcionou, so faltou falar do modo desenvolvedor do windows. ja arrumei"}]}, {"nome": "Feito", "cartoes": [{"t": "Escolher a ideia do app", "et": ["Doc"], "resp": ["P1", "P2", "P3"], "prazo": "21/10", "desc": "A gente pensou em lista de tarefas, controle de agua e controle de gastos. Escolhemos o de gastos porque é util pra todo mundo e da pra fazer em 2 telas.", "check": [], "com": "P3: votação deu 3x0 pro controle de gastos"}, {"t": "Escrever os requisitos (RF e RNF)", "et": ["Doc"], "resp": ["P3"], "prazo": "23/10", "desc": "Lista do que o app precisa fazer. Ficou: RF01 cadastrar, RF02 validar, RF03 listar, RF04 mostrar saldo, RF05 apagar com desfazer, RNF01 salvar no celular, RNF02 interface simples em portugues.", "check": ["RF01 a RF05", "RNF01 e RNF02", "Colocar no README"], "com": ""}, {"t": "Escolher o nome do app", "et": ["D", "Doc"], "resp": ["P1", "P2", "P3"], "prazo": "24/10", "desc": "Ideias: Meus Gastos, Cofrinho, Grana, Fold. Ficou **Fold** (de \"dobrar\" a nota de dinheiro na carteira). Curto e facil de lembrar.", "check": [], "com": "P1: fiz o icone da carteira pra combinar com o nome"}, {"t": "Definir cores e fonte", "et": ["D"], "resp": ["P1"], "prazo": "25/10", "desc": "Fundo bege clarinho (#F6F4EF), texto quase preto (#17191C), verde pra entrada (#1E7A52) e vermelho pra gasto (#B93A2B). Fonte Manrope (é gratis, do Google Fonts).", "check": ["Paleta de cores", "Fonte", "Guia de estilo no Figma"], "com": "P1: comecei com a Roboto mas a Manrope deixou com cara de app mais caprichado"}, {"t": "Desenhar tela inicial", "et": ["D"], "resp": ["P1"], "prazo": "27/10", "desc": "Saldo grande em cima, dois cards (entradas e gastos), lista dos lançamentos e o botão \"Novo lançamento\" embaixo.", "check": ["Versão com lançamentos", "Versão vazia (sem nada salvo)"], "com": ""}, {"t": "Desenhar tela de novo lançamento", "et": ["D"], "resp": ["P1"], "prazo": "28/10", "desc": "Escolher gasto ou entrada, digitar o valor bem grande, descrição, categoria e botão salvar.", "check": ["Versão preenchida", "Versão com erro (campo vazio)"], "com": ""}, {"t": "Fazer o protótipo navegavel no Figma", "et": ["D"], "resp": ["P1"], "prazo": "30/10", "desc": "Ligar o botão \"Novo lançamento\" na tela do formulario e o \"Salvar\"/\"X\" de volta pra tela inicial.", "check": ["Ligações entre as telas", "Testar no modo apresentação"], "com": ""}, {"t": "Instalar o Flutter e criar o projeto", "et": ["C"], "resp": ["P2"], "prazo": "27/10", "desc": "flutter create, rodar no chrome pra ver se esta tudo certo.", "check": ["Instalar Flutter", "flutter doctor", "Criar projeto", "Rodar no Chrome"], "com": "P2: no windows precisou ligar o Modo de Desenvolvedor senão o shared_preferences nao compilava"}, {"t": "Criar a classe Transacao (modelo)", "et": ["C"], "resp": ["P2"], "prazo": "29/10", "desc": "Arquivo lib/transacao.dart. Guarda descrição, valor, se é entrada, categoria e data. Tem as funções de somar e formatar dinheiro.", "check": ["Classe com os campos", "paraMapa e deMapa (pra salvar)", "somar()", "formatarDinheiro()"], "com": ""}, {"t": "Tela inicial com saldo e lista", "et": ["C"], "resp": ["P2"], "prazo": "01/11", "desc": "Arquivo lib/tela_inicial.dart. Mostra o saldo, os cards e a lista igual o Figma.", "check": ["Saldo", "Cards de entrada e gasto", "Lista", "Mensagem de lista vazia"], "com": ""}, {"t": "Formulário com validação", "et": ["C"], "resp": ["P2"], "prazo": "03/11", "desc": "Arquivo lib/tela_adicionar.dart. Não deixa salvar sem descrição ou com valor zero.", "check": ["Campo valor", "Campo descrição", "Escolher categoria", "Validação", "Botão salvar"], "com": ""}, {"t": "Salvar os dados no celular", "et": ["C"], "resp": ["P2"], "prazo": "05/11", "desc": "Usando o shared_preferences. Os lançamentos viram texto JSON e ficam guardados mesmo fechando o app.", "check": ["Salvar", "Carregar ao abrir o app"], "com": ""}, {"t": "Apagar arrastando + botão desfazer", "et": ["C"], "resp": ["P2"], "prazo": "06/11", "desc": "Arrasta o item pro lado e ele some. Aparece um aviso embaixo com \"Desfazer\" caso tenha sido sem querer.", "check": [], "com": ""}, {"t": "Bug: valor 1234,5 aparecia sem ponto de milhar", "et": ["B", "C"], "resp": ["P2"], "prazo": "07/11", "desc": "Aparecia \"R$ 1234,50\" em vez de \"R$ 1.234,50\". Arrumado na função formatarDinheiro e criado um teste pra isso nao voltar.", "check": [], "com": "P3: achei testando com o salario, conferi de novo e agora ta certo"}, {"t": "Testes automaticos", "et": ["C"], "resp": ["P2"], "prazo": "08/11", "desc": "flutter test com 4 testes: soma, salvar/carregar, formatação e abrir o app.", "check": ["Teste da soma", "Teste de salvar e carregar", "Teste de formatação", "Teste da tela"], "com": ""}, {"t": "Publicar versão web (GitHub Pages)", "et": ["C"], "resp": ["P2"], "prazo": "12/11", "desc": "Toda vez que manda codigo pro GitHub ele roda os testes e publica sozinho em kevinhsdev.github.io/fold. Assim da pra abrir no celular de qualquer um.", "check": ["Workflow do GitHub Actions", "Icone e nome Fold", "Testar no celular"], "com": ""}, {"t": "Escrever o README", "et": ["Doc"], "resp": ["P3"], "prazo": "10/11", "desc": "Problema, equipe, requisitos, estrutura das pastas, como rodar e limitações.", "check": ["Problema", "Requisitos", "Como rodar", "Limitações"], "com": ""}, {"t": "Explicação do codigo pra apresentação", "et": ["Doc"], "resp": ["P3", "P2"], "prazo": "11/11", "desc": "Arquivo docs/EXPLICACAO.md com os conceitos (widget, setState, Navigator...) e perguntas que o professor pode fazer.", "check": [], "com": ""}]}];
+const ETIQ = {"D": ["Design", "#9f6fd6"], "C": ["Código", "#4a8de8"], "Doc": ["Documentação", "#e2b203"], "B": ["Bug", "#e2483d"], "M": ["Melhoria", "#4bce97"]};
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const quadro = document.getElementById('quadro');
+const detalhe = document.getElementById('detalhe');
+
+LISTAS.forEach(lista => {
+  const feito = lista.nome === 'Feito';
+  const col = document.createElement('section');
+  col.className = 'lista';
+  col.innerHTML = `<h2>${esc(lista.nome)} <span>${lista.cartoes.length}</span></h2><div class="cartoes"></div>`;
+  lista.cartoes.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cartao';
+    const check = c.check.length ? `<span ${feito ? 'class="ok"' : ''}>☑ ${feito ? c.check.length : 0}/${c.check.length}</span>` : '';
+    b.innerHTML = `<div class="etiquetas">${c.et.map(e => `<span class="etq" style="background:${ETIQ[e][1]}" title="${ETIQ[e][0]}"></span>`).join('')}</div>
+      ${esc(c.t)}
+      <div class="rodape">${c.prazo ? `<span>🕑 ${c.prazo}</span>` : ''}${c.desc ? '<span>≡</span>' : ''}${check}${c.com ? '<span>💬 1</span>' : ''}
+      <span class="quem">${c.resp.map(p => `<span class="av ${p}">${p}</span>`).join('')}</span></div>`;
+    b.onclick = () => abrir(c, lista.nome);
+    col.querySelector('.cartoes').append(b);
+  });
+  quadro.append(col);
+});
+
+function abrir(c, nomeLista) {
+  const feito = nomeLista === 'Feito';
+  detalhe.innerHTML = `<button class="fechar" aria-label="Fechar">×</button>
+    <h3>${esc(c.t)}</h3><div class="sub">na lista <b>${esc(nomeLista)}</b>${c.prazo ? ' · entrega ' + c.prazo : ''}</div>
+    ${c.et.map(e => `<span class="tag" style="background:${ETIQ[e][1]}">${ETIQ[e][0]}</span>`).join('')}
+    ${c.resp.map(p => `<span class="av ${p}" style="vertical-align:middle">${p}</span>`).join(' ')}
+    <h4>Descrição</h4><p>${esc(c.desc).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')}</p>
+    ${c.check.length ? `<h4>Checklist</h4><ul>${c.check.map(i => `<li>${feito ? '☑' : '☐'} ${esc(i)}</li>`).join('')}</ul>` : ''}
+    ${c.com ? `<h4>Comentários</h4><div class="comentario">${esc(c.com)}</div>` : ''}`;
+  detalhe.querySelector('.fechar').onclick = () => detalhe.close();
+  detalhe.showModal();
+}
+detalhe.addEventListener('click', e => { if (e.target === detalhe) detalhe.close(); });
+</script>
+</body>
+</html>

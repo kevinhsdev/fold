@@ -1,113 +1,75 @@
-# Guia do Figma (Pessoa 1)
+# Figma do Fold (Pessoa 1)
 
-O objetivo é desenhar no Figma **as mesmas telas que o código faz**, para mostrar o planejamento visual. Frame: **iPhone 14 (390 × 844)**.
+Aqui fica o design do app. As telas prontas estão na pasta [`docs/figma/`](figma/) em arquivos `.svg`, que o Figma abre direto e deixa tudo editavel (textos, cores, ícones).
 
-**Estilo:** calmo e editorial, como os apps de finanças premium da App Store. Fundo off-white quente, muito espaço em branco, um único destaque por tela (o saldo; no formulário, o valor), cor só onde ela tem significado (verde = entrou, vermelho = saiu).
+| Arquivo | O que é |
+|---|---|
+| `00-guia-de-estilo.svg` | cores, fonte e os componentes |
+| `01-inicio.svg` | tela inicial com lançamentos |
+| `02-inicio-vazio.svg` | tela inicial quando ainda não tem nada salvo |
+| `03-novo-lancamento.svg` | formulário preenchido |
+| `04-erro-no-formulario.svg` | formulário quando a pessoa tenta salvar vazio |
 
-## Cores (iguais às de `lib/tema.dart`)
+## Como colocar no Figma (5 minutos)
 
-| Nome no código | Uso | Hex |
+1. Entra no figma.com (conta gratis serve) e cria um **Design file** novo, chama de **Fold – Telas**.
+2. Abre a pasta `docs/figma` no computador, seleciona os 5 arquivos `.svg` e **arrasta pra dentro do Figma**. Cada arquivo vira um frame.
+3. Organiza os frames lado a lado na ordem (00, 01, 02, 03, 04). O guia de estilo pode ficar numa página separada chamada "Guia".
+4. Se algum texto aparecer com a fonte errada: seleciona o frame inteiro e troca a fonte pra **Manrope** (ela já vem no Figma, é do Google Fonts).
+5. Renomeia os frames: `Início`, `Início – vazio`, `Novo lançamento`, `Novo lançamento – erro`.
+
+> Obs: os ícones são do Material Icons (versão Rounded), os mesmos que o Flutter usa. Então o que ta no Figma é igual ao app.
+
+## Deixando com cara de "feito no Figma" (vale fazer)
+
+Isso é o que o professor costuma olhar, então vale a pena gastar uns minutos:
+
+- **Estilos de cor:** no guia de estilo, clica em cada quadrado de cor > no painel da direita, em Fill, clica nos 4 pontinhos > **+** e salva com o nome (`fundo`, `tinta`, `entrada`, `gasto`...). Os nomes são iguais aos do código no `lib/tema.dart`.
+- **Componentes:** seleciona o botão "Salvar lançamento" e aperta **Ctrl + Alt + K**. Faz o mesmo com o campo de texto, o chip e o item da lista.
+- **Protótipo navegavel:** aba **Prototype** (lado direito):
+  - no frame `Início`, liga o botão **Novo lançamento** no frame `Novo lançamento` com a animação **Move in** de baixo pra cima (300ms, Ease out);
+  - no `Novo lançamento`, liga o **X** e o **Salvar lançamento** de volta pro `Início` com **Move out** pra baixo.
+  - Aperta o ▶ (Present) pra testar. Na apresentação da pra mostrar clicando.
+- **Compartilhar:** botão Share > "Anyone with the link can view" e coloca o link aqui embaixo.
+
+🔗 Link do Figma: _(colar aqui)_
+
+## Cores
+
+| Nome | Pra que usa | Cor |
 |---|---|---|
-| `fundo` | Fundo das telas | `#F6F4EF` |
-| `superficie` | Blocos brancos (lista, resumos, campos, chips) | `#FFFFFF` |
-| `tinta` | Texto principal, botão, chip/opção selecionada | `#17191C` |
-| `tintaSuave` | Textos secundários ("Saldo atual", datas, "R$") | `#6B6F76` |
-| `linha` | Divisória entre itens da lista | `#E7E3DA` |
-| `entrada` | Valor de entrada, ícone de entrada | `#1E7A52` |
-| `gasto` | Ícone de gasto, saldo negativo, fundo de apagar | `#B93A2B` |
+| fundo | fundo das telas | `#F6F4EF` |
+| superficie | cards, lista, campos e chips | `#FFFFFF` |
+| tinta | texto principal e botões | `#17191C` |
+| tintaSuave | textos de apoio ("Saldo atual", datas, "R$") | `#6B6F76` |
+| linha | linha fina entre os itens da lista | `#E7E3DA` |
+| entrada | dinheiro que entrou | `#1E7A52` |
+| gasto | dinheiro que saiu, erros | `#B93A2B` |
 
-Crie essas 7 cores como **Color Styles** no Figma com os mesmos nomes.
+## Fonte
 
-## Tipografia
+**Manrope**, gratis no Google Fonts.
 
-Fonte **Manrope** (Google Fonts, gratuita; no Figma ela já aparece na lista de fontes).
-
-| Elemento | Tamanho | Peso |
+| Onde | Tamanho | Peso |
 |---|---|---|
-| Saldo (número) | 48 | ExtraBold (800), espaçamento entre letras −1.5 |
-| "R$" do saldo | 22 | Bold (700), cor `tintaSuave` |
-| Título de seção ("Lançamentos") | 20 | ExtraBold (800) |
-| Título da barra ("Novo lançamento") | 17 | Bold (700) |
-| Título do item da lista / valores | 15 | Bold (700) |
-| "Saldo atual", "Categoria" | 15 | SemiBold (600) |
-| Subtítulo do item (categoria · data) | 13 | Medium (500), `tintaSuave` |
+| Número do saldo | 48 | 800 (ExtraBold) |
+| "R$" do saldo | 22 | 700 |
+| Título "Lançamentos" | 20 | 800 |
+| Título da barra de cima | 17 | 700 |
+| Nome do item e valor | 15 | 700 |
+| Categoria · data | 13 | 500 |
+| Texto normal | 14 | 400 |
 
-## Espaçamentos e cantos
+## Medidas
 
-- Margem lateral das telas: **20**.
-- Cantos arredondados: blocos e resumos **20**, campos **16**, ícone da categoria **14**, chips **12**, botão **18**.
-- Espaço maior **antes** de uma seção (36) do que entre o título e o conteúdo dela (12).
+- Tamanho da tela: **390 x 844** (iPhone 14).
+- Margem dos lados: **20**.
+- Cantos arredondados: cards **20**, campos **16**, botão **18**, quadradinho do ícone **14**, chips **12**.
 
-## Tela 1: Início
+## Porque a gente escolheu assim (pra explicar na apresentação)
 
-```
-┌──────────────────────────────┐
-│ Saldo atual                  │  ← 15, cinza
-│ R$ 1.245,70                  │  ← "R$" 22 cinza + número 48 extra negrito
-│                              │
-│ ┌────────────┐ ┌────────────┐│
-│ │↙ Entradas  │ │↗ Gastos    ││  ← dois blocos brancos lado a lado
-│ │R$ 1.450,00 │ │R$ 204,30   ││
-│ └────────────┘ └────────────┘│
-│                              │
-│ Lançamentos                  │  ← 20 extra negrito
-│ ┌──────────────────────────┐ │
-│ │[🍴] Almoço no RU  −R$18,50│ │  ← quadradinho com ícone da categoria
-│ │     Alimentação · 13/11   │ │     (fundo da cor com 10% de opacidade)
-│ │──────────────────────────│ │  ← divisória que começa depois do ícone
-│ │[💵] Estágio   +R$1.450,00│ │  ← entrada em verde; gasto em preto
-│ │     Salário · 10/11       │ │
-│ └──────────────────────────┘ │
-│                              │
-│      ( + Novo lançamento )   │  ← pílula escura centralizada
-└──────────────────────────────┘
-```
-
-Variações:
-- **Lista vazia:** bloco branco com ícone de recibo, "Nenhum lançamento ainda" e "Toque em "Novo lançamento" para registrar seu primeiro gasto ou entrada."
-- **Apagando item:** item deslocado para a esquerda, fundo vermelho com lixeira branca, e aviso escuro arredondado no rodapé: `"Almoço" apagado   Desfazer`.
-
-## Tela 2: Novo lançamento (abre de baixo para cima)
-
-```
-┌──────────────────────────────┐
-│ ✕       Novo lançamento      │
-│ [■ ↗ Gasto ][  ↙ Entrada  ]  │  ← opção marcada: fundo escuro, texto branco
-│                              │
-│ R$ 12,50                     │  ← valor gigante (44), verde se for Entrada
-│                              │
-│ ┌──────────────────────────┐ │
-│ │ Descrição (ex.: Almoço)  │ │  ← campo branco sem borda
-│ └──────────────────────────┘ │
-│ Categoria                    │
-│ (■Alimentação) (Transporte)  │  ← chips: marcado escuro, outros brancos
-│ (Moradia) (Lazer) (Estudos)  │
-│ (Salário) (Outros)           │
-│                              │
-│ [     Salvar lançamento     ]│  ← botão escuro, altura 56
-└──────────────────────────────┘
-```
-
-Variação **com erro**: texto vermelho pequeno embaixo do campo: "Digite um valor maior que zero" / "Digite uma descrição".
-
-Ícones (Material Symbols, versão Rounded): Alimentação `restaurant`, Transporte `directions_bus`, Moradia `home`, Lazer `sports_esports`, Estudos `school`, Salário `payments`, Outros `category`.
-
-## Componentes (crie como Components no Figma)
-
-1. **Item da lista**, com variantes `Entrada` e `Gasto`.
-2. **Bloco de resumo** (Entradas / Gastos).
-3. **Chip de categoria**, com variantes `Marcado` e `Normal`.
-4. **Campo de texto**, com variantes `Normal` e `Erro`.
-5. **Botão principal** e **Botão pílula**.
-
-## Protótipo (impressiona na apresentação)
-
-Botão **Novo lançamento** → Tela 2 com *Move In* de baixo (300 ms, Ease Out). **Salvar** e **✕** → voltam com *Move Out* para baixo.
-
-## Por que essas escolhas (para explicar)
-
-- **Saldo sem caixa em volta, em letra enorme:** é a única coisa que o usuário quer ver ao abrir o app, então ele domina a tela sozinho.
-- **Cor só com significado:** verde = dinheiro entrando, vermelho = saindo. O resto é preto e cinza. Gastos ficam em **preto** na lista (não em vermelho) para o app não parecer uma bronca a cada almoço.
-- **Seta ↗/↙ e ícone além da cor:** daltônicos podem não diferenciar verde de vermelho.
-- **Chips em vez de lista suspensa:** todas as categorias visíveis, escolha com um toque.
-- **Fundo off-white em vez de branco puro:** cansa menos a vista e faz os blocos brancos se destacarem sem precisar de sombra.
+- **Saldo bem grande e sem caixa em volta:** é a primeira coisa que a pessoa quer ver quando abre o app.
+- **Cor só quando significa alguma coisa:** verde = entrou dinheiro, vermelho = saiu. O resto é preto e cinza. Os gastos na lista ficam em preto e não em vermelho, senão o app parece que ta brigando com você toda vez que você almoça.
+- **Setinha ↗ ↙ junto com a cor:** quem é daltônico pode não diferenciar verde de vermelho, então a seta ajuda.
+- **Categorias em "chips" e não numa lista que abre:** da pra ver todas de uma vez e escolher com um toque só.
+- **Fundo bege clarinho em vez de branco:** cansa menos a vista e os cards brancos aparecem sem precisar de sombra.
